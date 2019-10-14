@@ -1,15 +1,7 @@
-import { SQS } from 'aws-sdk';
-
-export function SQSConsumer(sqsClient: SQS) {
-  return function<T extends { new (...args: any[]): {} }>(constructor: T) {
-    return class extends constructor {
-      sqsClient = sqsClient;
-    };
-  };
-}
-
-export function Subscriber(queueName: string) {
-  return function(target: any, key: string, descriptor: any) {
-    console.log(target);
-  };
+import { ConsumerMetadata, getConsumersFromMetadata } from './utils';
+export class SQSConsumerStarter {
+  public start() {
+    let consumers: ConsumerMetadata[] = getConsumersFromMetadata();
+    consumers.forEach(({ target }) => console.log(target.name));
+  }
 }
