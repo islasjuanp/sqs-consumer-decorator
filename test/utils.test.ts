@@ -1,19 +1,17 @@
 import { SQSConsumer } from '../src/consumer';
 import {getConsumersFromMetadata} from "../src/utils";
-import { describe, it, before } from 'mocha';
 import { expect } from 'chai';
+import { describe, it } from 'mocha';
 
 describe('Utils tests ', () => {
 
-    before('', async () => {
-    });
-
-    it('should add controller metadata to a class when decorated with @SQSConsumer', async () => {
+    it('should add controller metadata to a class when decorated with @SQSConsumer', () => {
         @SQSConsumer('test_queue_name')
         class TestConsumer {
         }
 
         let consumers = getConsumersFromMetadata();
-        expect(consumers.length).toBe(0);
+        expect(consumers.length).to.be.greaterThan(0);
     });
+
 });
