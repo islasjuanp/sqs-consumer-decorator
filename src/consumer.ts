@@ -9,6 +9,8 @@ export function SQSConsumer(queueName: string) {
       target: target,
     };
 
+    target.prototype.queueName = queueName;
+
     decorate(injectable(), target);
     addConsumerToMetadata(currentMetadata);
   };

@@ -1,21 +1,23 @@
-import { ConsumerConfig } from './utils';
 import { Consumer, ConsumerOptions } from 'sqs-consumer';
 import { SQS } from 'aws-sdk';
 import { SQSError, TimeoutError } from 'sqs-consumer/dist/errors';
+import { injectable } from 'inversify';
 
-
+@injectable()
 export abstract class SQSConsumerAbstract {
   private consumer: Consumer | undefined;
+  //@ts-ignore Defined on @SQSConsumer decorator
+  public queueName: string;
 
-  public start(config: ConsumerConfig): void {
+  public start(sqs?: SQS): void {
     if (this.consumer !== undefined && !this.consumer.isRunning) {
       let options: ConsumerOptions = {
-        queueUrl: config.queueName,
+        queueUrl: this.queueName,
         handleMessage: this.handleMessage,
       };
 
-      if (config.sqs !== undefined) {
-        options = { sqs: config.sqs, ...options };
+      if (sqs !== undefined) {
+        options = { sqs: sqs, ...options };
       }
 
       this.consumer = Consumer.create(options);

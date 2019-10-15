@@ -65,5 +65,8 @@ describe('Utils tests ', () => {
     let instances: SQSConsumerAbstract[] = utils.getConsumerFromContainer(container);
 
     expect(instances.length).to.be.greaterThan(0);
+    instances.forEach(instance => {
+      expect(instance.queueName).to.be.a('string');
+    })
   });
 });
