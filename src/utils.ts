@@ -1,6 +1,22 @@
+import { Container } from 'inversify';
+import { SQSConsumerAbstract } from './interfaces';
+import SQS = require('aws-sdk/clients/sqs');
+
+const Consumer = Symbol.for('Controller');
+
 export interface ConsumerMetadata {
   queueName: string;
   target: any;
+}
+
+export interface ConsumerConfig {
+  queueName: string;
+  sqs?: SQS;
+}
+
+export interface ConsumerImpl {
+  instance: SQSConsumerAbstract;
+  queueName: string;
 }
 
 export function getConsumersFromMetadata(): ConsumerMetadata[] {
@@ -19,4 +35,29 @@ export function addConsumerToMetadata(consumer: ConsumerMetadata): void {
   const newMetadata = [consumer, ...previousMetadata];
 
   Reflect.defineMetadata('sqs-consumer', newMetadata, Reflect);
+}
+
+export function cleanConsumersMetadata(): void {
+  Reflect.defineMetadata('sqs-consumer', [], Reflect);
+}
+
+export function registerConsumerToContainer(container: Container, consumer: ConsumerMetadata): void {
+  const { name } = consumer.target;
+
+  if (container.isBoundNamed(Consumer, name)) {
+    throw new Error(`Duplicated consumer with name ${name}`);
+  }
+
+  container
+    .bind(Consumer)
+    .to(consumer.target)
+    .whenTargetNamed(name);
+}
+
+export function getConsumerFromContainer(container: Container): SQSConsumerAbstract[] {
+  if (container.isBound(Consumer)) {
+    return container.getAll<SQSConsumerAbstract>(Consumer);
+  } else {
+    return [];
+  }
 }
