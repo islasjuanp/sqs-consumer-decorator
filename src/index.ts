@@ -1,4 +1,4 @@
-export { SQSConsumerStarter } from './starter'
-export { SQSConsumerAbstract } from './interfaces'
-export { SQSError, TimeoutError } from 'sqs-consumer/dist/errors';
-export { SQSConsumer } from './consumer';
+export { SQSConsumerStarter } from './starter';
+export { SQSConsumerAbstract } from './consumer';
+export { SQSError, TimeoutError, SQSMessage } from './interfaces';
+export { SQSConsumer } from './decorator';

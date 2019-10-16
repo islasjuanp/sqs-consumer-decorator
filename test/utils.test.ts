@@ -1,12 +1,9 @@
-import { SQSConsumer } from '../src/consumer';
 import * as utils from '../src/utils';
 import { ConsumerMetadata } from '../src/utils';
 import { expect } from 'chai';
 import { describe, it, before } from 'mocha';
 import { Container } from 'inversify';
-import { SQSConsumerAbstract } from '../src/interfaces';
-import { SQS } from 'aws-sdk';
-import { SQSError, TimeoutError } from 'sqs-consumer/dist/errors';
+import { SQSConsumer, SQSError, TimeoutError, SQSMessage, SQSConsumerAbstract } from '../src';
 
 describe('Utils tests ', () => {
   let container: Container;
@@ -23,7 +20,7 @@ describe('Utils tests ', () => {
         return undefined;
       }
 
-      async handleMessage(message: SQS.Message): Promise<void> {
+      async handleMessage(message: SQSMessage): Promise<void> {
         return undefined;
       }
 

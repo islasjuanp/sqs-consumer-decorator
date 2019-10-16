@@ -1,5 +1,5 @@
 import { Container } from 'inversify';
-import { SQSConsumerAbstract } from './interfaces';
+import { SQSConsumerAbstract } from './consumer';
 
 const Consumer = Symbol.for('Controller');
 

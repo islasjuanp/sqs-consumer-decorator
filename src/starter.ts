@@ -1,11 +1,11 @@
 import { ConsumerMetadata } from './utils';
 import * as utils from './utils';
 import { Container } from 'inversify';
-import { SQSConsumerAbstract } from './interfaces';
+import { SQSConsumerAbstract } from './consumer';
 import * as SQS from 'aws-sdk/clients/sqs';
 
 export class SQSConsumerStarter {
-  private _container: Container;
+  readonly _container: Container;
   private _instances: SQSConsumerAbstract[];
 
   constructor(container: Container) {
