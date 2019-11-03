@@ -1,14 +1,14 @@
-import { SQS } from 'aws-sdk';
-import { Consumer, ConsumerOptions } from 'sqs-consumer';
-import { SQSError, TimeoutError, SQSMessage } from './interfaces';
-import { injectable } from 'inversify';
-import 'reflect-metadata'
+import { SQS } from "aws-sdk";
+import { Consumer, ConsumerOptions } from "sqs-consumer";
+import { SQSError, TimeoutError, SQSMessage } from "./interfaces";
+import { injectable } from "inversify";
+import "reflect-metadata";
 
 @injectable()
 export abstract class SQSConsumerAbstract {
-  private consumer: Consumer | undefined;
-  //@ts-ignore Defined on @SQSConsumer decorator
+  // @ts-ignore Defined on @SQSConsumer decorator
   public queueName: string;
+  private consumer: Consumer | undefined;
 
   /**
    * Executed when a message is successfully processed and removed from the queue.
@@ -49,15 +49,15 @@ export abstract class SQSConsumerAbstract {
 
       this.consumer = Consumer.create(options);
 
-      this.consumer.on('error', async err => {
+      this.consumer.on("error", async err => {
         await this.handleError(err);
       });
 
-      this.consumer.on('processing_error', async err => {
+      this.consumer.on("processing_error", async err => {
         await this.handleProcessingError(err);
       });
 
-      this.consumer.on('timeout_error', async err => {
+      this.consumer.on("timeout_error", async err => {
         await this.handleTimeoutError(err);
       });
     }
