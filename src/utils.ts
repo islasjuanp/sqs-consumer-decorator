@@ -1,7 +1,7 @@
-import { Container } from 'inversify';
-import { SQSConsumerAbstract } from './consumer';
+import { Container } from "inversify";
+import { SQSConsumerAbstract } from "./consumer";
 
-const Consumer = Symbol.for('Controller');
+const Consumer = Symbol.for("Controller");
 
 export interface ConsumerMetadata {
   queueName: string;
@@ -9,7 +9,7 @@ export interface ConsumerMetadata {
 }
 
 export function getConsumersFromMetadata(): ConsumerMetadata[] {
-  return Reflect.getMetadata('sqs-consumer', Reflect) || [];
+  return Reflect.getMetadata("sqs-consumer", Reflect) || [];
 }
 
 export function addConsumerToMetadata(consumer: ConsumerMetadata): void {
@@ -23,11 +23,11 @@ export function addConsumerToMetadata(consumer: ConsumerMetadata): void {
 
   const newMetadata = [consumer, ...previousMetadata];
 
-  Reflect.defineMetadata('sqs-consumer', newMetadata, Reflect);
+  Reflect.defineMetadata("sqs-consumer", newMetadata, Reflect);
 }
 
 export function cleanConsumersMetadata(): void {
-  Reflect.defineMetadata('sqs-consumer', [], Reflect);
+  Reflect.defineMetadata("sqs-consumer", [], Reflect);
 }
 
 export function registerConsumerToContainer(container: Container, consumer: ConsumerMetadata): void {

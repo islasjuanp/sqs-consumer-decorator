@@ -1,5 +1,6 @@
 # sqs-consumer-decorator
-
+Built on top of `sqs-consumer` in order to make it easy to instantiate 
+consumers using `typescrypt` and `inversify`
 
 ## Installation 
 

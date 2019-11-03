@@ -1,17 +1,17 @@
-import { expect } from 'chai';
-import { describe, it, before } from 'mocha';
-import { Container } from 'inversify';
-import { SQSConsumer, SQSConsumerStarter, SQSMessage, SQSError, TimeoutError, SQSConsumerAbstract } from '../src';
+import { expect } from "chai";
+import { describe, it, before } from "mocha";
+import { Container } from "inversify";
+import { SQSConsumer, SQSConsumerStarter, SQSMessage, SQSError, TimeoutError, SQSConsumerAbstract } from "../src";
 
-describe('SQS Consumer Starter tests ', () => {
+describe("SQS Consumer Starter tests ", () => {
   let container: Container;
 
-  before('', () => {
+  before("", () => {
     container = new Container();
   });
 
-  it('should add controller metadata to a class when decorated with @SQSConsumer', () => {
-    @SQSConsumer('test_queue_name')
+  it("should add controller metadata to a class when decorated with @SQSConsumer", () => {
+    @SQSConsumer("test_queue_name")
     class TestConsumer extends SQSConsumerAbstract {
       async handleError(error: SQSError): Promise<void> {
         return undefined;
@@ -29,14 +29,12 @@ describe('SQS Consumer Starter tests ', () => {
         return undefined;
       }
     }
-
   });
 
-  it('should be able to initialize and build SQSConsumerStarter', () => {
+  it("should be able to initialize and build SQSConsumerStarter", () => {
     let starter: SQSConsumerStarter = new SQSConsumerStarter(container);
-    let instances: SQSConsumerAbstract[]  = starter.build();
+    let instances: SQSConsumerAbstract[] = starter.build();
 
-    expect(instances[0].queueName).to.be.equal('test_queue_name')
+    expect(instances[0].queueName).to.be.equal("test_queue_name");
   });
-
 });

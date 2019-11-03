@@ -1,6 +1,6 @@
-import { injectable, decorate } from 'inversify';
-import 'reflect-metadata';
-import { addConsumerToMetadata, ConsumerMetadata } from './utils';
+import { injectable, decorate } from "inversify";
+import "reflect-metadata";
+import { addConsumerToMetadata, ConsumerMetadata } from "./utils";
 
 export function SQSConsumer(queueName: string) {
   return function(target: any) {
